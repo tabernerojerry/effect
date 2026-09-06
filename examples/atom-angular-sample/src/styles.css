@@ -1,0 +1,121 @@
+@import "tailwindcss" source(none);
+
+/*
+ * Automatic source detection is turned off above because this example lives
+ * inside the Effect monorepo, where it would walk every sibling package.
+ */
+@source "./index.html";
+@source "./app";
+
+/* effect.website switches theme with a `dark` class on <html>, not a media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * The effect.website palette. Light values sit on `:root` and dark values on
+ * `.dark`; the `@theme inline` block below is what turns each one into a
+ * utility, so `bg-card` resolves to `var(--card)` and flips with the class.
+ */
+:root {
+  color-scheme: light;
+
+  --background: oklch(100% 0 0);
+  --foreground: oklch(21% 0.006 285.885);
+  --card: oklch(98.5% 0 0);
+  --card-foreground: oklch(21% 0.006 285.885);
+  --muted: oklch(96.7% 0.001 286.375);
+  --muted-foreground: oklch(44.2% 0.017 285.786);
+  --subtle-foreground: oklch(70.5% 0.015 286.067);
+  --accent: oklch(92% 0.004 286.32);
+  --accent-foreground: oklch(21% 0.006 285.885);
+  --primary: oklch(21% 0.006 285.885);
+  --primary-foreground: oklch(98.5% 0 0);
+  --destructive: oklch(57.7% 0.245 27.325);
+  --border: oklch(92% 0.004 286.32);
+  --border-strong: oklch(87.1% 0.006 286.286);
+  --input: oklch(87.1% 0.006 286.286);
+  --ring: oklch(69.6% 0.17 162.48);
+  --brand: oklch(69.6% 0.17 162.48);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(14.1% 0.005 285.823);
+  --foreground: oklch(98.5% 0 0);
+  --card: oklch(21% 0.006 285.885);
+  --card-foreground: oklch(98.5% 0 0);
+  --muted: oklch(27.4% 0.006 286.033);
+  --muted-foreground: oklch(70.5% 0.015 286.067);
+  --subtle-foreground: oklch(55.2% 0.016 285.938);
+  --accent: oklch(27.4% 0.006 286.033);
+  --accent-foreground: oklch(98.5% 0 0);
+  --primary: oklch(98.5% 0 0);
+  --primary-foreground: oklch(21% 0.006 285.885);
+  --destructive: oklch(63.7% 0.237 25.331);
+  --border: oklch(27.4% 0.006 286.033);
+  --border-strong: oklch(37% 0.013 285.805);
+  --input: oklch(37% 0.013 285.805);
+  --ring: oklch(76.5% 0.177 163.223);
+  --brand: oklch(76.5% 0.177 163.223);
+}
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+}
+
+/*
+ * Element defaults, so the templates below only carry layout and variants. The
+ * base layer has lower precedence than utilities, so any single class in a
+ * template still wins over what is set here.
+ */
+@layer base {
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+
+  button {
+    @apply cursor-pointer rounded-md border border-border bg-background px-3 py-1.5 text-sm font-medium transition-colors;
+  }
+
+  button:hover:not(:disabled) {
+    @apply border-brand text-brand;
+  }
+
+  button:disabled {
+    @apply cursor-default opacity-55;
+  }
+
+  input {
+    @apply w-20 rounded-md border border-input bg-background px-2 py-1 text-sm tabular-nums;
+  }
+
+  code {
+    @apply font-mono text-[0.9em];
+  }
+}

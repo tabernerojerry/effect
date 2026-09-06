@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "preserve",
+    // Inside this monorepo `effect` and `@effect/atom-angular` are linked as
+    // workspace source, so their package `exports` resolve to `.ts` files and
+    // they would be type-checked under this application's own compiler options.
+    // Pointing at the built output instead keeps the app compiling against the
+    // packages' declaration files, exactly as an installed consumer would.
+    //
+    // Run `pnpm build` at the repository root once before building this example.
+    // A real application outside this repository needs neither of these paths.
+    "paths": {
+      "effect": ["../../packages/effect/dist/index"],
+      "effect/*": ["../../packages/effect/dist/*"],
+      "@effect/atom-angular": ["../../packages/atom/angular/dist/index"],
+      "@effect/atom-angular/*": ["../../packages/atom/angular/dist/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}
